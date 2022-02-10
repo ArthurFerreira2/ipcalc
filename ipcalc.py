@@ -23,8 +23,6 @@
 # exploring the ipaddress module
 # https://docs.python.org/3.7/library/ipaddress.html
 
-# TODO : create a GUI ?
-
 import ipaddress
 
 while True:
@@ -40,9 +38,9 @@ while True:
     print("""
     na host/mask   returns the network address of the host
     bd host/mask   returns the broadcast address of the host
-    hs net/mask    returns the the hosts of the network
     nm net/mask    returns the netmask of the network
     hm net/mask    returns the hostmask of the network
+    hs net/mask    returns all the hosts of the network
     E6 v6addr      returns the exploded IPv6 adddress
     C6 v6addr      returns the compressed IPv6 address
     RP addr        returns the reverse pointer
@@ -53,6 +51,14 @@ while True:
     try:
       addr = ipaddress.ip_interface(''.join(command[1:]))
       print(addr.network)
+    except ValueError:
+      print('%s is not a valid address' % command[1])
+    continue
+
+  if command[0].upper() == 'BD':
+    try:
+      addr = ipaddress.ip_interface(''.join(command[1:]))
+      print(addr.network[-1])
     except ValueError:
       print('%s is not a valid address' % command[1])
     continue
